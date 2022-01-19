@@ -110,7 +110,7 @@ export default{
       settings,
       works,
     }
-  }
+  },
 }
 
 </script>

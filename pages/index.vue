@@ -98,7 +98,7 @@
 export default{
   async asyncData({ $microcms }){
 
-    const settings = await $$microcms.get({
+    const settings = await $microcms.get({
       endpoint: 'settings',
     })
 

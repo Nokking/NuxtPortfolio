@@ -3,10 +3,17 @@
     <div class="mainVisual">
       <picture>
         <source
-          srcset="https://placehold.jp/375x530.png"
-          media="(max-width:767px)"
+          :width="settings.mainVisualSp.width"
+          :height="settings.mainVisualSp.height"
+          :srcset="settings.mainVisualSp.url"
+          media="(max-width: 767px)"
         />
-        <img src="https://placehold.jp/1440x436.png" alt="">
+        <img
+          :width="settings.mainVisualPc.width"
+          :height="settings.mainVisualPc.height"
+          :src="settings.mainVisualPc.url"
+          alt=""
+        />
       </picture>
     </div>
     <section id="about" class="sectionPrimary">
@@ -16,7 +23,8 @@
           <div class="profile__upper">
             <div class="profile__text">
               <p class="profile__name">
-                山田太郎<span lang="en">Taro Yamada</span>
+                <span>{{ settings.name }}</span>
+                <span lang="en">{{ settings.nameEnglish }}</span>
               </p>
               <dl class="profile__item">
                 <dt class="profile__item">技術スタック</dt>
@@ -24,15 +32,20 @@
               </dl>
               <dl class="profile__item">
                 <dt class="profile__title">趣味</dt>
-                <dd>開発、ゲーム、YouTube、ライブ</dd>
+                <dd>{{ settings.hobby }}</dd>
               </dl>
             </div>
             <figure class="profile__image">
-              <img src="https://placehold.jp/260x260.png" alt="your name">
+              <img
+                :width="settings.profileImage.width"
+                :height="settings.profileImage.height"
+                :src="settings.profileImage.url"
+                :alt="settings.name"
+              />
             </figure>
           </div>
           <p class="profile__message">
-            Free Space<br /> 
+            {{ settings.message }}
           </p>
         </div>
       </div>
@@ -42,7 +55,7 @@
       <div class="container">
         <h2 class="headingPrimary">works</h2>
         <ol class="row works">
-          <li v-for="work in works.contents" key="work.id" class="works__item">
+          <li v-for="work in works.contents" :key="work.id" class="works__item">
             <nuxt-link to="'/works/${work.id}/'" class="works__inner">
               <figure class="works__image">
                 <img 
@@ -84,11 +97,17 @@
 <script>
 export default{
   async asyncData({ $microcms }){
+
+    const settings = await $$microcms.get({
+      endpoint: 'settings',
+    })
+
     const works = await $microcms.get({
       endpoint: 'works',
       queries: {limit:2},
     })
     return {
+      settings,
       works,
     }
   }

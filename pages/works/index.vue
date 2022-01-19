@@ -9,7 +9,7 @@
 
     <div class="container">
       <ol class="row works">
-        <li v-for="work in works.contents" key="work.id" class="works__item">
+        <li v-for="work in works.contents" :key="work.id" class="works__item">
           <nuxt-link to="/works/${works.id}/" class="works__inner">
             <figure class="works__image">
               <img 
